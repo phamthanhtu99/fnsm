@@ -17,7 +17,7 @@ public class Directional {
 		for (RoleDTO roleDTO : roleDTOs) {
 			switch (roleDTO.getName()) {
 			case "ADMIN":
-
+				System.out.println("ok");
 				break;
 			case "USER":
 
