@@ -24,10 +24,5 @@ public class Login {
 		return "login";
 	}
 	
-	@Auth(role =Role.LOGIN)
-	@PostMapping("/home")
-	public String home(@RequestParam(required= true) Map<String, String> map){
-		String url = "";
-		return "admin/home";
-	}
+	
 }

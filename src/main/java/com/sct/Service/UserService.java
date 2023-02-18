@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.sct.Entity.RoleEntity;
+import com.sct.Entity.UserEntity;
 import com.sct.Utils.SessionUtils;
 import com.sct.Utils.StatusAcount;
 import com.sct.Utils.StringUtils;
@@ -100,5 +102,18 @@ public class UserService {
 			return true;
 		}
 		return false;	
+	}
+	
+	public void add_user(UserEntity entity) {
+		entity.setPass(passwordEncoder.encode(entity.getPass()));
+		entity.setUser_id(StringUtils.getUserId());
+		entity.setStatus(1);
+		//set role 
+		List<RoleEntity> roles = new ArrayList<>();
+		// role user
+		roles.add(new RoleEntity().builder().id(Long.valueOf(1)).build());
+		
+		entity.setRoleEntity(roles);
+		userDao.save(entity);
 	}
 }

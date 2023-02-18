@@ -43,6 +43,8 @@ function callback(rs) {
         case "check_login":
             if (rs.LOGIN_CHK == 0) {
                 showOTP()
+            }else{
+                alert("Please enter user and pass")
             }
             break;
         case "check_otp":
@@ -51,7 +53,8 @@ function callback(rs) {
                 select_role(rs.role)
 
             }else{
-                alert("NO")
+                alert("OPT invalid");
+                gl('#login_check').children.opt.value = '';
             }
             break;
         default:
@@ -92,6 +95,7 @@ function check_otp() {
 
     if (otp.trim().length == 0) {
         alert('Please enter otp !')
+        return;
     }
 
     var getdata = {

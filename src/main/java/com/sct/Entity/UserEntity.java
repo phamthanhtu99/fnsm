@@ -64,6 +64,10 @@ public class UserEntity {
 	@Column(name = "IP")
 	private String ip;
 	
+	@Column(name = "USER_ID")
+	private String user_id;
+	
+		
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name="User_Role",joinColumns=@JoinColumn(name="User_id"),inverseJoinColumns =@JoinColumn(name="role_id"))
 	private List<RoleEntity> roleEntity = new ArrayList<RoleEntity>();

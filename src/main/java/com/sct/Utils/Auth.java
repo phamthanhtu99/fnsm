@@ -12,8 +12,9 @@ import java.lang.annotation.Target;
 @Target(value={ElementType.METHOD})
 public @interface Auth {
 	 public enum Role {
-	        LOGIN, ADMIN, USER , STAFF
+	        LOGIN,ADMIN,USER,STAFF,NONE
 	    };
-	    public Role[] roles()  default Role.LOGIN;
-	    public Role role() default Role.LOGIN; // default = @Auth()
+	    
+	    public Role[] roles() default Role.NONE; // default = @Auth()
+	    public Role role()  default Role.NONE;
 }

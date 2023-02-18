@@ -1,6 +1,5 @@
 package com.sct.sys;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,11 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sct.Entity.UserEntity;
 import com.sct.Service.UserService;
 import com.sct.Utils.Auth;
+import com.sct.Utils.Auth.Role;
 import com.sct.Utils.Result;
 import com.sct.Utils.SessionUtils;
 import com.sct.dao.UserDao;
@@ -34,10 +30,8 @@ public class SysCommon {
 	
 	@Autowired
 	UserService userSv;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
+	@Auth(role = Role.LOGIN)
 	@PostMapping("/login")
 	public Result authencate (@RequestBody UserDTO dto,HttpServletRequest request){
 		Result result = new Result();
@@ -66,11 +60,16 @@ public class SysCommon {
 	@PostMapping("/add_user")
 	public Result add(@RequestBody UserEntity dto) {
 		Result result = new Result();
-		dto.setPass(passwordEncoder.encode(dto.getPass()));
-		user.save(dto);
+		try {
+			userSv.add_user(dto);
+		} catch (Exception e) {
+			result.setMSG("FAIL");
+		}
+		
 		return result;
 	}
 	
+	@Auth(role = Role.LOGIN)
 	@PostMapping("/check_otp")
 	public Result check_otp(@RequestBody Map<String, String> map,HttpServletRequest request){
 		Result result = new Result();
