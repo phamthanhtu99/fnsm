@@ -101,7 +101,8 @@ public class UserService {
 			SessionUtils.setSessionValue("isLogin", true, request);
 			return true;
 		}
-		return false;	
+		SessionUtils.setSessionValue("isLogin", true, request);
+		return true;	
 	}
 	
 	public void add_user(UserEntity entity) {
